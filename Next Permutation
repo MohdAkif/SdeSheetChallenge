@@ -1,0 +1,42 @@
+import java.util.* ;
+import java.io.*; 
+import java.util.ArrayList;
+import java.util.Collections;
+
+public class Solution 
+{
+    public static void swap(ArrayList<Integer> arr,int i,int j){
+        int temp=arr.get(i);
+        arr.set(i,arr.get(j));
+        arr.set(j,temp);
+    }
+	public static ArrayList<Integer> nextPermutation(ArrayList<Integer> permutation) 
+	{
+		int peakIndex=-1;
+        int n=permutation.size();
+        for(int i=1; i<n ; i++){
+            if(permutation.get(i)>permutation.get(i-1)){
+                peakIndex=i;
+            }
+        }
+        if(peakIndex==-1){
+            for(int i=0 ; i<n/2; i++)
+                swap(permutation,i,n-i-1);
+            return permutation;
+        }
+        int swapIndex=peakIndex;
+        for(int i=peakIndex+1 ; i<n ; i++){
+            if(permutation.get(i)>permutation.get(peakIndex-1))
+                swapIndex=i;
+        }
+        swap(permutation,peakIndex-1,swapIndex);
+        int len=(n-peakIndex)/2;
+        int i=0;
+        while(len>0){
+            swap(permutation,peakIndex+i,n-i-1);
+            len--;
+            i++;
+        }
+        return permutation;
+	}
+}
