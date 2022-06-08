@@ -1,0 +1,59 @@
+import java.util.* ;
+import java.io.*; 
+import java.util.ArrayList;
+
+public class Solution {
+    public static void rotateMatrix(ArrayList<ArrayList<Integer>> mat, int n, int m) {
+        // Write your cod
+        if(m==1 || n==1) return ;
+        int left=0,right=m-1,top=0,down=n-1;
+        int dir=0;
+        while(left<=right && top<=down){
+           if(left==right || top==down) break;
+            for(int i=right-1 ; i>=left ; i--){
+                //mat[top][i]
+                int temp=mat.get(top).get(i);
+                mat.get(top).set(i,mat.get(top).get(i+1));
+                mat.get(top).set(i+1,temp);
+            }
+            top++;
+
+            for(int i=top ; i<=down ; i++){
+                //mat[i][left]
+                int temp=mat.get(i).get(left);
+                mat.get(i).set(left,mat.get(i-1).get(left));
+                mat.get(i-1).set(left,temp);
+
+            }
+            left++;
+
+            for(int i=left ; i<=right ; i++){
+                //mat[down][i];
+                int temp=mat.get(down).get(i);
+                mat.get(down).set(i,mat.get(down).get(i-1));
+                mat.get(down).set(i-1,temp);
+            }
+            down--;
+
+            for(int i=down ; i>=top ; i--){
+                //mat[i][right]
+                int temp=mat.get(i).get(right);
+                mat.get(i).set(right,mat.get(i+1).get(right));
+                mat.get(i+1).set(right,temp);
+            }
+            right--;
+        }
+    }
+}
+/*
+top=2,down=2,left=1,right=2;
+1 2 3 4
+5 6 7 8
+9 10 11 12 
+13 14 15 16
+
+5  1  2   3
+9  7  6   4
+13        8
+14 15 16 12
+*/
