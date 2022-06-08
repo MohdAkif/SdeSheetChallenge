@@ -1,0 +1,50 @@
+import java.util.* ;
+import java.io.*; 
+/*******************************************************
+
+    Following is the Interval class structure
+
+    class Interval {
+        int start, int finish;
+
+        Interval(int start, int finish) {
+            this.start = start;
+            this.finish = finish;
+        }
+    }
+    
+*******************************************************/
+
+import java.util.List;
+import java.util.ArrayList;
+
+public class Solution {
+    static class MyComparator implements Comparator<Interval>{
+        public int compare(Interval obj1,Interval obj2){
+            if(obj1.start>=obj2.start)
+                return 1;
+            else
+                return -1;
+        }
+    }
+    public static List<Interval> mergeIntervals(Interval[] intervals) {
+        // write your code here.
+        Arrays.sort(intervals,new MyComparator());
+        int x1=intervals[0].start,y1=intervals[0].finish;
+        List<Interval> ans=new ArrayList<Interval>();
+        for(int i=1 ; i<intervals.length ; i++){
+            int x2=intervals[i].start;
+            int y2=intervals[i].finish;
+            if(y1>=x2){
+                y1=Math.max(y1,y2);
+            }
+            else{
+                ans.add(new Interval(x1,y1));
+                x1=x2;
+                y1=y2;
+            }
+        }
+        ans.add(new Interval(x1,y1));
+        return ans;
+    }
+}
