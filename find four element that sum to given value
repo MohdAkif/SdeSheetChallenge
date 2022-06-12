@@ -1,0 +1,32 @@
+import java.util.* ;
+import java.io.*; 
+public class Solution {
+  static class Pair{
+      int i;
+      int j;
+      public Pair(int _i,int _j){
+          i=_i;
+          j=_j;
+      }
+  }
+  public static String fourSum(int[] arr, int target, int n) {
+      // Write your code here.
+      HashMap<Integer,Pair> map=new HashMap<>();
+      for(int i=0 ; i<n ; i++){
+          for(int j=i+1;j<n ; j++){
+              map.put(arr[i]+arr[j],new Pair(i,j));
+          }
+      }
+      for(int i=0 ; i<n ; i++){
+          for(int j=i+1 ; j<n ; j++){
+              int sum=arr[i]+arr[j];
+              if(map.containsKey(target-sum)){
+                  Pair p=map.get(target-sum);
+                  if(p.i!=i && p.j!=i && p.i!=j && p.j!=j)
+                      return "Yes";
+              }
+          }
+      }
+      return "No";
+  }
+}
