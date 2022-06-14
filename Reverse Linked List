@@ -1,0 +1,28 @@
+import java.util.* ;
+import java.io.*; 
+public class Solution 
+{
+	public static int uniqueSubstrings(String input) 
+    {
+		//write your code here
+        int[] map=new int[256];
+        int i=0,j=0;
+        int ans=0;
+        while(j<input.length()){
+            map[(int)input.charAt(j)]++;
+            if(map[(int)input.charAt(j)]==2){
+                while(input.charAt(i)!=input.charAt(j)){
+                    map[(int)input.charAt(i)]--;
+                    i++;
+                }
+                map[(int)input.charAt(i)]--;
+                i++;
+            }
+            else{
+                ans=Math.max(ans,j-i+1);
+            }
+            j++;
+        }
+        return ans;
+	}
+}
