@@ -1,0 +1,58 @@
+import java.util.* ;
+import java.io.*; 
+/****************************************************************
+
+    Following is the class structure of the Node class:
+
+        class Node
+		{
+		    public int data;
+		    public Node next;
+
+		    Node(int data)
+		    {
+		        this.data = data;
+		        this.next = null;
+		    }
+		}
+
+*****************************************************************/
+
+public class Solution 
+{   
+    public static Node find(Node slow,Node head){
+        int count=1;
+        Node temp=slow.next;
+        while(temp!=slow){
+            temp=temp.next;
+            count++;
+        }
+        slow=head;
+        Node fast=head;
+        while(count>0){
+            fast=fast.next;
+            count--;
+        }
+        count=0;
+        while(slow!=fast){
+            slow=slow.next;
+            fast=fast.next;
+            count++;
+        }
+        return slow;
+    }
+    public static Node firstNode(Node head) 
+    {
+        //    Write your code here.
+        
+        Node slow=head,fast=head;
+        while(fast!=null && fast.next!=null){
+            slow=slow.next;
+            fast=fast.next.next;
+            if(slow==fast){
+                return find(slow,head);
+            }
+        }
+        return null;
+    }
+}
