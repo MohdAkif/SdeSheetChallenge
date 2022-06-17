@@ -1,0 +1,42 @@
+import java.util.* ;
+import java.io.*; 
+/****************************************************************
+
+       Following is the class structure of the Node class:
+
+       class Node {
+	int data;
+	Node next;
+	Node child;
+
+	public Node(int data) {
+		this.data = data;
+		this.next = null;
+		this.child = null;
+	}
+}
+
+*****************************************************************/
+public class Solution {
+    public static Node merge(Node a,Node b){
+        if(a==null) return b;
+        if(b==null) return a;
+        Node ans;
+        if((int)a.data>(int)b.data){
+            ans=b;
+            ans.child=merge(a,b.child);
+        }
+        else{
+            ans=a;
+            ans.child=merge(a.child,b);
+        }
+        ans.next=null;
+        return ans;
+    }
+	public static Node flattenLinkedList(Node start) {
+		 //Write your code here
+        if(start==null || start.next==null) return start;
+        return merge(start,flattenLinkedList(start.next));
+	}
+}
+
