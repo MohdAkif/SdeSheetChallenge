@@ -1,0 +1,20 @@
+public class Solution
+{
+public static int findMinimumCoins(int amount)
+    {
+        // Write your code here.
+        int[] arr={1,2,5,10,20,50,100,500,1000};
+        int i=arr.length-1;
+        int count=0;
+        while(amount>0){
+            if(amount>=arr[i]){
+                count+=(amount/arr[i]);
+                amount=amount%arr[i];
+                i--;
+            }
+            else
+                i--;
+        }
+        return count;
+    }
+}
