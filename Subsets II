@@ -1,0 +1,25 @@
+import java.util.*;
+public class Solution {
+    static ArrayList<ArrayList<Integer>> ans;
+    static int n;
+    public static void findSubset(int index,int[] arr,ArrayList<Integer> temp){
+        ans.add(new ArrayList<>(temp));
+        for(int i=index ; i<n ; i++){
+            if(i!=index && arr[i]==arr[i-1]) continue;
+            temp.add(arr[i]);
+            findSubset(i+1,arr,temp);
+            temp.remove(temp.size()-1);
+        }
+        
+    }
+    public static ArrayList<ArrayList<Integer>> uniqueSubsets(int n, int arr[]) {
+        // Write your code here..
+        ans=new ArrayList<>();
+        Solution.n=n;
+        Arrays.sort(arr);
+        findSubset(0,arr,new ArrayList<Integer>());
+        //System.out.println(ans);
+        return ans;
+    }
+
+}
