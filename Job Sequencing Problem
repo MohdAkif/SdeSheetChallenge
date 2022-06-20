@@ -1,0 +1,33 @@
+import java.util.*;
+public class Solution
+{
+    static class Mycom implements Comparator<int[]>{
+        public int compare(int[] a,int[] b){
+            if(a[1]<=b[1]) return 1;
+            else return -1;
+        }
+    }
+    public static int jobScheduling(int[][] jobs)
+    {
+        // Write your code here
+        int max=0;
+        for(int[] val:jobs){
+            max=Math.max(max,val[0]);
+        }
+        int[] limit=new int[max];
+        int ans=0;
+        Arrays.sort(jobs,new Mycom());
+        for(int[] val:jobs){
+            int id=val[0];
+            int value=val[1];
+            for(int i=id-1 ; i>=0 ; i--){
+                if(limit[i]==0){
+                    ans+=value;
+                    limit[i]=1;
+                    break;
+                }
+            }
+        }
+        return ans;
+    }
+}
