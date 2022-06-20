@@ -1,0 +1,30 @@
+import java.util.*;
+public class Solution {
+    static class Mycom implements Comparator<int[]>{
+        public int compare(int[] a,int[] b){
+            if(a[1]>=b[1])
+                return 1;
+            else
+                return -1;
+        }
+    }
+    public static int maximumActivities(List<Integer> start, List<Integer> end) {
+        //Write your code here
+        int[][] arr=new int[start.size()][2];
+        for(int i=0 ; i<start.size() ; i++){
+            arr[i][0]=start.get(i);
+            arr[i][1]=end.get(i);
+        }
+        Arrays.sort(arr,new Mycom());
+        int count=1;
+        int e1=arr[0][1];
+        for(int i=1 ; i<arr.length ; i++){
+            if(arr[i][0]>=e1)
+            {
+                count++;
+                e1=arr[i][1];
+            }
+        }
+        return count;
+    }
+}
