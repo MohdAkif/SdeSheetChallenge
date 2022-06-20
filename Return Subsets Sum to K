@@ -1,0 +1,33 @@
+import java.util.*;
+public class Solution 
+{
+    static int n;
+    static ArrayList<ArrayList<Integer>> ans;
+    static int k;
+    public static void findSubset(ArrayList<Integer> arr,int i,ArrayList<Integer> ds){
+        if(i==n)
+        {
+            int temp=0;
+            //System.out.println(ds);
+            for(int val:ds) temp+=val;
+            if(temp==k) ans.add(new ArrayList<>(ds));
+            return ;
+        }
+        else{
+            ds.add(arr.get(i));
+            findSubset(arr,i+1,ds);
+            ds.remove(ds.size()-1);
+            findSubset(arr,i+1,ds);
+        }
+    }
+    public static ArrayList<ArrayList<Integer>> findSubsetsThatSumToK(ArrayList<Integer> arr, int n, int k) 
+	{
+        // Write your code here.
+        Solution.n=arr.size();
+        Solution.k=k;
+        ans=new ArrayList<>();
+        findSubset(arr,0,new ArrayList<>());
+        //System.out.println(ans);
+        return ans;
+    }
+}
