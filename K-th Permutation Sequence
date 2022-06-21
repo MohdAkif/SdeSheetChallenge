@@ -1,0 +1,29 @@
+import java.util.ArrayList;
+
+public class Solution {
+    public static int fact(int n){
+        if(n==0) return 1;
+        return n*fact(n-1);
+    }
+    public static String kthPermutation(int n, int k) {
+        // Write your code here.
+        ArrayList<Integer> arr=new ArrayList<>();
+        String ans="";
+        for(int i=1 ; i<=n ; i++) arr.add(i);
+        
+        int i=0,j=n-1,temp=0;
+        while(i<=j){
+            int val=fact(j);
+            if(temp+val>=k){
+                ans+=String.valueOf(arr.remove(i));
+                i=0;
+                j--;
+            }
+            else{
+                temp+=val;
+                i++;
+            }
+        }
+        return ans;
+    }
+}
