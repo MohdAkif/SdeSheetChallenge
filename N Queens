@@ -1,0 +1,58 @@
+import java.util.*;
+public class Solution {
+    static ArrayList<ArrayList<Integer>> ans;
+    static int n;
+    public static boolean check(int row,int col,ArrayList<ArrayList<Integer>> ds){
+        int[][] dir={{-1,-1},   {-1,0},      {-1,1},
+                     {0,-1} ,                {0,1},
+                     {1,-1} ,   {1,0},       {1,1}
+                    };
+        for(int[] val:dir){
+            int x=val[0]+row;
+            int y=val[1]+col;
+            while(x>=0 && x<n && y>=0 && y<n){
+                if(ds.get(x).get(y)==0){
+                    x=x+val[0];
+                    y=y+val[1];
+                }
+                else
+                    return false;
+            }
+        }
+        return true;
+    } 
+    
+    public static void placedQueen(int row,ArrayList<ArrayList<Integer>> ds){
+        if(row==n){
+            //System.out.println(ds);
+            ans.add(new ArrayList<Integer>());
+            for(ArrayList<Integer> val:ds)  
+                    ans.get(ans.size()-1).addAll(val);
+            return ;
+        }
+        for(int col=0; col<n ; col++){
+            //System.out.println(col);
+            if(check(row,col,ds)){
+                ds.get(row).set(col,1);
+                placedQueen(row+1,ds);
+                ds.get(row).set(col,0);
+            }
+        }
+    }
+    public static ArrayList<ArrayList<Integer>> solveNQueens(int N) {
+        // Write your code here.
+        ans=new ArrayList<>();
+        n=N;
+        
+        ArrayList<ArrayList<Integer>> temp=new ArrayList<>();
+        for(int i=0 ; i<n ; i++){
+            temp.add(new ArrayList<Integer>());
+            for(int j=0 ; j<n ; j++){
+                temp.get(i).add(0);
+            }
+        }
+      
+        placedQueen(0,temp);
+        return ans;
+    }
+}
