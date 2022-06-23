@@ -1,0 +1,40 @@
+import java.util.*;
+public class Solution{ 
+    static ArrayList<String> ans;
+    static int n;
+    static HashSet<String> set;
+    static String temp;
+    public static void findAll(String s,int index,ArrayList<String> ds){
+        if(index==n){
+           temp="";
+           for(String val:ds)
+               temp+=(val+" ");
+           ans.add(temp.trim());
+           return ;
+        }
+        for(int i=index ; i<n ; i++){
+            if(set.contains(s.substring(index,i+1))){
+                ds.add(s.substring(index,i+1));
+                findAll(s,i+1,ds);
+                ds.remove(ds.size()-1);
+            }
+        }
+    }
+	public static ArrayList<String> wordBreak(String s, ArrayList<String> dictionary) {
+		// Write your code here.
+        set=new HashSet<>();
+        for(String val:dictionary) set.add(val);
+        n=s.length();
+        ans=new ArrayList<String>();
+        findAll(s,0,new ArrayList<String>());
+        return ans;
+	}
+}
+/*
+1
+6
+god is now no where here
+godisnowherenowhere
+            god
+         
+*/
