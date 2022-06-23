@@ -1,0 +1,50 @@
+import java.util.ArrayList;
+
+public class Solution
+{
+    public static int countLessThenEqualTo(ArrayList<Integer> arr,int x){
+        int i=0,j=arr.size();
+        while(i<j){
+            int mid=i+(j-i)/2;
+            if(arr.get(mid)<=x)
+                i=mid+1;
+            else
+                j=mid;
+        }
+        return i;
+    }
+	public static int getMedian(ArrayList<ArrayList<Integer>> matrix)
+	{
+		// Write your code here.
+        int low=Integer.MAX_VALUE;
+        int high=Integer.MIN_VALUE;
+        int n=matrix.size(),m=matrix.get(0).size();
+        for(ArrayList<Integer> arr:matrix){
+            for(Integer val:arr){
+                low=Math.min(low,val);
+                high=Math.max(high,val);
+            }
+        }
+        int k=(m*n)/2+1;
+        while(low<=high){
+            int mid=low+(high-low)/2;
+            int count=0;
+
+            for(ArrayList<Integer> arr:matrix){
+                count+=(countLessThenEqualTo(arr,mid));
+            }
+            if(count>=k) high=mid-1;
+            else low=mid+1;
+        }
+        return low;
+	}
+}
+/*
+k=8;
+1 2 6 6 10 => 2
+2 4 4 5 7  => 4
+2 5 5 6 6  => 3
+l=1 ,h=10 , mid=5
+l=1 , h=4;  mid
+
+*/
