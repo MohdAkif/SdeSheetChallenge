@@ -1,0 +1,34 @@
+import java.util.*;
+public class Solution {
+    public static boolean isValid(int[] arr,int x,int k){
+        int s=arr[0];
+        int c=1;
+        for(int val:arr){
+            if(val-s>=x){
+                c++;
+                s=val;
+            }
+            if(c>=k)
+                return true;
+               
+        }
+        return false;
+    }
+    public static int chessTournament(int[] positions, int n,  int c) 
+	{
+        Arrays.sort(positions);
+        int low=1,high=positions[n-1]-positions[0];
+        int ans=-1;
+        while(low<=high){
+            int mid=low+(high-low)/2;
+            if(isValid(positions,mid,c)){
+                ans=mid;
+                low=mid+1;
+            }
+            else
+                high=mid-1;
+        }
+        return ans;   
+    }
+
+}
