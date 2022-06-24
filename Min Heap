@@ -1,0 +1,67 @@
+import java.util.*;
+public class Solution {
+
+    // minHeap function which take size of Queries and Queries as Input.
+// Returns an array out outputs depending on the query.
+    static ArrayList<Integer> arr;
+    static int size;
+    public static void swap(int i,int j){
+        int temp=arr.get(i);
+        arr.set(i,arr.get(j));
+        arr.set(j,temp);
+    }
+    static void minHeapify(int i){
+        int left=2*i+1;
+        int right=2*i+2;
+        int minIndex=i;
+        if(left<size && arr.get(left)<arr.get(minIndex))
+            minIndex=left;
+        if(right<size && arr.get(right)<arr.get(minIndex))
+            minIndex=right;
+        if(i!=minIndex){
+            swap(i,minIndex);
+            minHeapify(minIndex);
+        }
+    }
+    public static void add(int x){
+        if(size<arr.size())
+           arr.set(size,x);
+        else
+            arr.add(x);
+        size++;
+        int i=size-1;
+        while(i!=0){
+            int parent=(i-1)/2;
+            if(arr.get(parent)>arr.get(i)){
+                swap(i,parent);
+                i=parent;
+            }
+            else
+                break;  
+        }
+    }
+    public static int remove(){
+        swap(0,size-1);
+        size--;
+        minHeapify(0);
+        return arr.get(size);
+    }
+    static int[] minHeap(int n, int[][] q) {
+        // Write your code here.
+        arr=new ArrayList<>();
+        size=0;
+        ArrayList<Integer> temp=new ArrayList<>();
+        for(int[] val:q){
+            if(val[0]==1)
+                temp.add(remove());
+            else
+                add(val[1]);
+            //System.out.println(arr+" "+size);
+        }
+        int[] ans=new int[temp.size()];
+        for(int i=0 ; i<temp.size() ; i++){
+            ans[i]=temp.get(i);
+        }
+        return ans;
+    }
+}
