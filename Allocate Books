@@ -1,0 +1,61 @@
+public class Solution {
+    /*
+    i can memomize this solution but i have a better approach
+    
+    public static long findMax(int[] arr,int m,int index,int n){
+        if(m==0 && index==n)
+            return 0;
+        else if(m==0 || index==n)
+            return Integer.MAX_VALUE;
+        long temp=0;
+        long ans=Integer.MAX_VALUE;
+        for(int i=index ; i<n ; i++){
+            temp+=arr[i];
+            ans=Math.min(ans,Math.max(temp,findMax(arr,m-1,i+1,n)));
+        }
+        return ans;
+    }
+    */
+    public static long ayushGivesNinjatest(int n, int m, int[] time) {
+        // Write your code here.
+        long low=0,high=0;
+        for(int val:time){
+            low=Math.max(low,val);
+            high+=val;
+        }
+        long ans=-1;
+        while(low<=high){
+            long mid=low+(high-low)/2;
+            if(isValid(time,mid,n)){
+                ans=mid;
+                high=mid-1;
+            }
+            else
+                low=mid+1;
+        }
+        return ans;
+    }
+    public static boolean isValid(int[] arr,long x,int n){
+        long count=1;
+        long temp=0;
+        for(int val:arr){
+            temp+=val;
+            if(temp>x){
+                count++;
+                temp=val;
+            if(count>n)
+                return false;
+            }
+        }
+        return true;
+    }
+}
+/*
+3 5
+1 2 2 3 1
+
+                                    1 2 2 3 1
+                 1|2 2 3 1=>2    or 1 2 | 2 3 1=> 2 or  1 2 2 | 3 1 => 2 or 1 2 2 3|1 =>2 | 1 2 2 3 1| =>2;
+                 
+                 
+*/
