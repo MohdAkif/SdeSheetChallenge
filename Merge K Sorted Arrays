@@ -1,0 +1,41 @@
+import java.util.*;
+
+public class Solution 
+{
+    static class Pair{
+        int val,i;
+        public Pair(int _i,int _j){
+            val=_i;
+            i=_j;
+        }
+    }
+	public static ArrayList<Integer> mergeKSortedArrays(ArrayList<ArrayList<Integer>> kArrays, int k)
+	{
+		// Write your code here.
+        int[] index=new int[k];
+        PriorityQueue<Pair> heap=new PriorityQueue<>((Pair a,Pair b)->(a.val-b.val));
+        ArrayList<Integer> ans=new ArrayList<>();
+        int i=0;
+        for(ArrayList<Integer> arr:kArrays){
+            heap.add(new Pair(arr.get(0),i));
+            i++;
+        }
+        while(heap.size()!=0){
+            Pair temp=heap.remove();
+            ans.add(temp.val);
+            i=index[temp.i];
+            if(i+1<kArrays.get(temp.i).size()){
+                heap.add(new Pair(kArrays.get(temp.i).get(i+1),temp.i));
+                index[temp.i]++;
+            }
+        }
+        return ans;
+	}
+}
+/*
+3 5| 9 =>0
+4 
+1 2 3 8| =>2 
+[2,0,3]
+1 2 3 3 4 5 8 9
+*/
