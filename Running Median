@@ -1,0 +1,42 @@
+
+import java.util.Comparator;
+import java.util.*;
+
+public class Solution {
+
+	public static void findMedian(int arr[])  {
+        
+        
+        /* Your class should be named Solution
+		 * Don't write main().
+		 * Don't read input, it is passed as function argument.
+		 * Return output and don't print it.
+	 	 * Taking input and printing output is handled automatically.
+        */
+        PriorityQueue<Integer> maxHeap=new PriorityQueue<>((a,b)->b-a);
+        PriorityQueue<Integer> minHeap=new PriorityQueue<>();
+        int n=arr.length;
+        ArrayList<Integer> ans=new ArrayList<>();
+        for(int val:arr){
+            if(maxHeap.size()==0 || maxHeap.peek()>=val)
+                maxHeap.add(val);
+            else
+                minHeap.add(val);
+            
+            //balance the heaps
+            if(maxHeap.size()>minHeap.size()+1)
+                minHeap.add(maxHeap.remove());
+            else if(maxHeap.size()<minHeap.size())
+                maxHeap.add(minHeap.remove());
+            if(maxHeap.size()==minHeap.size()){
+                ans.add((maxHeap.peek()+minHeap.peek())/2);
+            }
+            else
+                ans.add(maxHeap.peek());
+        }
+        for(int val:ans)
+            System.out.printf("%d ",val);
+    }
+
+
+}
