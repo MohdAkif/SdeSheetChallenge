@@ -1,0 +1,66 @@
+import java.util.*;
+public class Solution{
+    static class Node{
+        int val;
+        int i,j;
+        public Node(int v,int _i,int _j){
+            val=v;
+            i=_i;
+            j=_j;
+        }
+    }
+    static class Pair{
+        int i;
+        int j;
+        public Pair(int _i,int _j){
+            i=_i;
+            j=_j;
+        }
+        @Override
+        public boolean equals(Object o){
+            if(o==null) return false;
+            if(!(o instanceof Pair)){
+                return false;
+            }
+            Pair obj=(Pair)o;
+            return (i==obj.i && j==obj.j);
+        }
+        @Override
+        public int hashCode(){
+            return Objects.hash(i,j);
+        }
+        
+    }
+	public static ArrayList<Integer> kMaxSumCombination(ArrayList<Integer> a, ArrayList<Integer> b, int n, int k){
+		// Write your code here.
+        ArrayList<Integer> ans=new ArrayList<>();
+        Collections.sort(a,Collections.reverseOrder());
+        Collections.sort(b,Collections.reverseOrder());
+      
+        PriorityQueue<Node> heap=new PriorityQueue<>((Node x,Node y)->(y.val-x.val));
+        heap.add(new Node(a.get(0)+b.get(0),0,0));
+        HashSet<Pair> set=new HashSet<Pair>();
+        set.add(new Pair(0,0));
+        int i=0,j=0;
+        while(k>0){
+            //System.out.println(heap);
+            Node temp=heap.remove();
+            ans.add(temp.val);
+            i=temp.i+1;
+            j=temp.j;
+            if(i<n && j<n && !set.contains(new Pair(i,j))){
+                heap.add(new Node(a.get(i)+b.get(j),i,j));
+                set.add(new Pair(i,j));
+            }
+            i=temp.i;
+            j=temp.j+1;
+            if(i<n && j<n && !set.contains(new Pair(i,j))){
+                heap.add(new Node(a.get(i)+b.get(j),i,j));
+                set.add(new Pair(i,j));
+            }
+            k--;
+        }
+        return ans;
+        
+	}
+}
