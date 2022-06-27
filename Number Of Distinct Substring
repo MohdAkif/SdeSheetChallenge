@@ -1,0 +1,53 @@
+import java.util.*;
+public class Solution {
+    static Node root;
+    static class Node{
+        Node[] link=new Node[26];
+        boolean flag=false;
+        public boolean containsKey(char ch){
+            return link[ch-'a']!=null;
+        }
+        public void put(char ch,Node node){
+            link[ch-'a']=node;
+        }
+        public Node get(char ch){
+            return link[ch-'a'];
+        }
+    }
+    public static void insert(String s){
+        Node temp=root;
+        for(int i=0 ; i<s.length() ; i++){
+            if(!temp.containsKey(s.charAt(i)))
+                temp.put(s.charAt(i),new Node());
+            temp=temp.get(s.charAt(i));
+        }
+        temp.flag=true;
+    }
+    public static boolean search(String s){
+        Node temp=root;
+        for(int i=0 ; i<s.length() ; i++){
+            if(!temp.containsKey(s.charAt(i)))
+                return false;
+            temp=temp.get(s.charAt(i));
+        }
+        return temp.flag;
+    }
+    public static int distinctSubstring(String word) {
+        // Write your code here.
+        //HashSet<String> set=new HashSet<>();
+        root=new Node();
+        int n=word.length();
+        int count=0;
+        for(int i=0 ; i<n ; i++){
+            for(int j=i+1 ; j<=n ; j++){
+                if(search(word.substring(i,j)))
+                    continue;
+                else{
+                    insert(word.substring(i,j));
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+}
