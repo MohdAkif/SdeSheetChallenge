@@ -1,0 +1,64 @@
+public class Trie {
+    static class Node{
+        Node[] link=new Node[26];
+        boolean flag=false;
+        public boolean containsKey(char ch){
+            return link[ch-'a']!=null;
+        }
+        public void put(Node node,char ch){
+            link[ch-'a']=node;
+        }
+        public Node get(char ch){
+            return link[ch-'a'];
+        }
+    }
+    static Node root;
+    //Initialize your data structure here
+
+    Trie() {
+        //Write your code here
+        root=new Node();
+    }
+
+
+    //Inserts a word into the trie
+
+    public static void insert(String word) {
+        //Write your code here
+        Node temp=root;
+        for(int i=0 ; i<word.length() ; i++){
+            if(!temp.containsKey(word.charAt(i)))
+                temp.put(new Node(),word.charAt(i));
+            temp=temp.get(word.charAt(i));
+        }
+        temp.flag=true;
+    }
+
+
+    //Returns if the word is in the trie
+
+    public static boolean search(String word) {
+        //Write your code here
+        Node temp=root;
+        for(int i=0 ; i<word.length() ; i++){
+            if(!temp.containsKey(word.charAt(i)))
+                return false;
+            temp=temp.get(word.charAt(i));
+        }
+        return temp.flag;
+    }
+
+    
+    //Returns if there is any word in the trie that starts with the given prefix
+
+    public static boolean startsWith(String prefix) {
+        //Write your code here
+        Node temp=root;
+        for(int i=0 ; i<prefix.length() ; i++){
+            if(!temp.containsKey(prefix.charAt(i)))
+                return false;
+            temp=temp.get(prefix.charAt(i));
+        }
+        return true;
+    }
+}
