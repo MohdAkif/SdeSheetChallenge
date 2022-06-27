@@ -1,0 +1,67 @@
+import java.util.*;
+class Solution {
+  static class Node{
+      Node[] link=new Node[26];
+      boolean flag=false;
+      public boolean containsKey(char ch){
+          return link[ch-'a']!=null;
+      }
+      public void put(char ch,Node node){
+          link[ch-'a']=node;
+      }
+      public Node get(char ch){
+          return link[ch-'a'];
+      }
+  }
+  static Node root;
+  public static void insert(String s){
+      Node temp=root;
+      for(int i=0 ; i<s.length() ; i++){
+          if(!temp.containsKey(s.charAt(i)))
+              temp.put(s.charAt(i),new Node());
+          temp=temp.get(s.charAt(i));
+      }
+      temp.flag=true;
+  }
+  public static boolean search(String s){
+      Node temp=root;
+      for(int i=0 ; i<s.length() ; i++){
+          if(!temp.containsKey(s.charAt(i)))
+              return false;
+          temp=temp.get(s.charAt(i));
+      }
+      return temp.flag;
+  }
+  public static String completeString(int n, String[] a) {
+    // Write your code here.
+      root=new Node();
+      for(String s:a)
+          insert(s);
+      String ans="";
+      for(String s:a){
+          n=s.length();
+          int count=0;
+          for(int i=1 ; i<=n ; i++){
+              if(search(s.substring(0,i))){
+                  count++;
+              }
+              else
+                  break;
+          }
+          if(n==count && ans.length()<n){
+              ans=s;
+          }
+          else if(count==n && ans.length()==n){
+              for(int i=0 ; i<n ; i++){
+                  if(s.charAt(i)<ans.charAt(i)){
+                      ans=s;
+                      break;
+                  }
+              }
+          }
+      }
+      if(ans=="") return "None";
+      return ans;
+      
+   }
+}
