@@ -1,0 +1,23 @@
+import java.util.*;
+public class Solution {
+    static ArrayList<ArrayList<Integer>> ans;
+    static int n;
+    public static void findPowerSet(ArrayList<Integer> arr,int index,ArrayList<Integer> ds){
+        ans.add(new ArrayList<>(ds));
+        for(int i=index ; i<n ; i++){
+            ds.add(arr.get(i));
+            findPowerSet(arr,i+1,ds);
+            ds.remove(ds.size()-1);
+        }
+    }
+    
+	public static ArrayList<ArrayList<Integer>> pwset(ArrayList<Integer> arr) {
+		// WRITE YOUR CODE HERE
+        ans=new ArrayList<>();
+        Collections.sort(arr);
+        n=arr.size();
+        findPowerSet(arr,0,new ArrayList<Integer>());
+        return ans;
+	}
+}
+
