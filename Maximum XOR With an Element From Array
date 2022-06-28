@@ -1,0 +1,79 @@
+import java.util.*;
+
+public class Solution {
+    static Node root;
+    static class Pair{
+        int x,m,i;
+        public Pair(int _x,int _m,int _i){
+            x=_x;
+            m=_m;
+            i=_i;
+        }
+    }
+    static class Node{
+        Node[] link=new Node[2];
+        public boolean containsKey(int ind){
+            return link[ind]!=null;
+        }
+        public void put(int ind,Node node){
+            link[ind]=node;
+        }
+        public Node get(int ind){
+            return link[ind];
+        }
+    }
+    public static void insert(int val){
+        Node temp=root;
+        for(int i=31 ; i>=0 ; i--){
+            int bit=(val>>i)&1;
+            if(!temp.containsKey(bit))
+                temp.put(bit,new Node());
+            temp=temp.get(bit);
+        }
+    }
+    public static int findMax(int val){
+        Node temp=root;
+        //System.out.println(root);
+        int max=0;
+        for(int i=31 ;  i>=0 ; i--){
+            int bit=(val>>i)&1;
+            //System.out.print(temp);
+            if(temp.containsKey(1-bit))
+            {
+                max=max|(1<<i);
+                temp=temp.get(1-bit);
+            }
+            else
+                temp=temp.get(bit);
+        }
+        return max;
+    }
+    
+    
+    public static ArrayList<Integer> maxXorQueries(ArrayList<Integer> arr, ArrayList<ArrayList<Integer>> queries) {
+        // Write your code here.
+        int n=queries.size();
+        ArrayList<Integer> ans=new ArrayList<Integer>();
+        for(int i=0 ; i<n ; i++) ans.add(-1);
+        Pair[] p=new Pair[n];
+        for(int i=0 ; i<n ; i++){
+            p[i]=new Pair(queries.get(i).get(0),queries.get(i).get(1),i);
+        }
+        Arrays.sort(p,(a,b)->(a.m-b.m));
+        Collections.sort(arr);
+        int ind=0;
+        root=new Node();
+        for(int i=0 ; i<n ; i++){
+            while(ind<arr.size() && p[i].m>=arr.get(ind)){
+                insert(arr.get(ind));
+                ind++;
+            }
+            if(ind!=0){
+                //System.out.println(findMax(p[i].x));
+                ans.set(p[i].i,findMax(p[i].x));
+                //break;
+            }
+        }
+        return ans;
+    }
+}
