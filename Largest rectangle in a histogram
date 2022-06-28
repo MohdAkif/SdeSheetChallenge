@@ -1,0 +1,38 @@
+import java.util.*;
+
+public class Solution {
+  public static int largestRectangle(ArrayList < Integer > heights) {
+    // Write your code here.
+      Stack<Integer> stack=new Stack<>();
+      int n=heights.size();
+      int ans=0;
+      int i;
+      for(i=0 ; i<n ; i++){
+          if(stack.isEmpty() || heights.get(stack.peek())<=heights.get(i))
+              stack.push(i);
+          else{
+              while(!stack.isEmpty() && heights.get(stack.peek())>heights.get(i)){
+                  int h=heights.get(stack.pop());
+                  int w=(stack.isEmpty())?i:(i-stack.peek()-1);
+                  ans=Math.max(ans,h*w);
+              }
+              stack.push(i);
+          }
+      }
+      while(!stack.isEmpty()){
+          int h=heights.get(stack.pop());
+          int w=(stack.isEmpty())?i:(i-stack.peek()-1);
+          ans=Math.max(ans,h*w);
+      }
+      return ans;
+  }
+}
+/*
+2 1 5 6 2 3
+0 1 2 3 4 5 
+stack <1>
+tempArea=2*(i) if tack is empty()
+tempArea=6*(4-2-1)=>6;
+tempArea=5*(4-1-1)=>10
+
+*/
