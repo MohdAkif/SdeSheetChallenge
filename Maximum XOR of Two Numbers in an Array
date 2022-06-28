@@ -1,0 +1,50 @@
+public class Solution {
+    static Node root;
+    static class Node{
+        Node[] link=new Node[2];
+        public boolean containsKey(int ind){
+            return link[ind]!=null;
+        }
+        public void put(int ind,Node node){
+            link[ind]=node;
+        }
+        public Node get(int ind){
+            return link[ind];
+        }
+    }
+    public static void insert(int num){
+        Node temp=root;
+        for(int i=31 ; i>=0 ; i--){
+            int bit=(num>>i)&1;
+            if(!temp.containsKey(bit))
+                temp.put(bit,new Node());
+            temp=temp.get(bit);
+        }
+    }
+    public static int findMax(int num){
+        Node temp=root;
+        int max=0;
+        for(int i=31 ; i>=0 ; i--){
+            int bit=(num>>i)&1;
+            if(temp.containsKey(1-bit)){
+                max=max|(1<<i);
+                temp=temp.get(1-bit);
+            }
+            else{
+                temp=temp.get(bit);
+            }
+        }
+        return max;
+    }
+    public static int maximumXor(int[] A) {
+        root=new Node();
+        int ans=0;
+        for(int val:A)
+            insert(val);
+        for(int val:A){
+            ans=Math.max(ans,findMax(val));
+        }
+        return ans;
+        // Write your Code here
+    }
+}
