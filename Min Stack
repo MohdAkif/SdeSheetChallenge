@@ -1,0 +1,33 @@
+import java.util.*;
+public class Solution {
+    static class MinStack {
+        Stack<int[]> stack;
+        MinStack() {
+            stack=new Stack<int[]>();
+        }
+        void push(int num) {
+            // Write your code here.
+            if(stack.isEmpty() || stack.peek()[1]>=num){
+                stack.push(new int[]{num,num});
+            }
+            else
+                stack.push(new int[]{num,stack.peek()[1]});
+            
+        }
+        int pop() {
+            if(stack.isEmpty()) return -1;
+            int x=stack.pop()[0];
+            return x;
+        }
+        int top() {
+            // Write your code here.
+            if(stack.isEmpty()) return -1;
+            return stack.peek()[0];
+        }
+        int getMin() {
+            // Write your code here.
+            if(stack.isEmpty()) return -1;
+            return stack.peek()[1];
+        }
+    }
+}
