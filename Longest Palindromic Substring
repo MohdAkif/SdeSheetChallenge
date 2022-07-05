@@ -1,0 +1,24 @@
+public class Solution {	
+    static int n;
+    static int start,len;
+    public static void palindrome(String s,int i,int j){
+        while(i>=0 && j<n && s.charAt(i)==s.charAt(j)){
+            if(len<j-i+1){
+                start=i;
+                len=j-i+1;
+            }
+            i--;
+            j++;
+        }
+    }
+	public static String longestPalinSubstring(String str) {
+		// Write your code here.
+        n=str.length();
+        start=0;len=1;
+        for(int i=0 ; i<n ; i++){
+            palindrome(str,i,i);
+            palindrome(str,i,i+1);
+        }
+        return str.substring(start,start+len);
+	}
+}
