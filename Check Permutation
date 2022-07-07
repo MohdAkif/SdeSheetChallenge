@@ -1,0 +1,25 @@
+public class Solution {
+    public static boolean areAnagram(String str1, String str2){
+        // Write your code here.
+        int[] arr=new int[256];
+        int count=0;
+        for(int i=0 ; i<str1.length() ; i++){
+            if(arr[str1.charAt(i)]==0)
+                count++;
+            arr[str1.charAt(i)]++;
+        }
+        for(int i=0 ; i<str2.length() ; i++){
+            arr[str2.charAt(i)]--;
+            if(arr[str2.charAt(i)]==0) count--;
+        }
+        return (count==0)?true:false;
+    }
+}
+/*
+
+
+
+listen , count=0
+
+
+*/
