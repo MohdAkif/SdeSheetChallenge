@@ -1,0 +1,49 @@
+
+public class Solution {
+    public static int lps(String s){
+        int[] arr=new int[s.length()];
+        int i=0,j=1;
+        while(j<s.length()){
+            if(s.charAt(i)==s.charAt(j)){
+                arr[j]=++i;
+                j++;
+            }
+            else{
+                if(i!=0){
+                    i=arr[i-1];
+                }
+                else
+                    j++;
+            }
+        }
+        return arr[s.length()-1];
+    }
+    public static int minCharsforPalindrome(String str) {
+        //Write your code here
+        StringBuilder s = new StringBuilder();
+        s.append(str);
+
+        // Get concatenation of string, special character
+        // and reverse string
+        String rev = s.reverse().toString();
+        s.reverse().append("$").append(rev);
+        
+        return str.length()-lps(s.toString());
+    }
+
+}
+
+
+
+
+/*
+//abcd=>3
+xxaxxa=>1
+axxaxx
+012345
+abcd
+dcba
+0001
+bab
+bab
+*/
