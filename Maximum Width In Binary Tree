@@ -1,0 +1,43 @@
+/************************************************************
+
+    Following is the TreeNode class structure
+
+    class TreeNode {
+	int val;
+	TreeNode left;
+	TreeNode right;
+
+	TreeNode(int val) {
+		this.val = val;
+		this.left = null;
+		this.right = null;
+	   }
+	}
+
+
+************************************************************/
+import java.util.*;
+public class Solution {
+	public static int getMaxWidth(TreeNode root) {
+		// Write your code here.
+        if(root==null) return 0;
+        int ans=1;
+        Queue<TreeNode> q=new LinkedList<>();
+        q.add(root);
+        while(!q.isEmpty()){
+            Queue<TreeNode> temp=new LinkedList<>();
+            while(!q.isEmpty()){
+                TreeNode x=q.remove();
+                if(x.left!=null){
+                    temp.add(x.left);
+                }
+                if(x.right!=null){
+                    temp.add(x.right);
+                }
+            }
+            ans=Math.max(ans,temp.size());
+            q=temp;
+        }
+        return ans;
+	}
+}
