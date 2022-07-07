@@ -1,0 +1,49 @@
+/************************************************************
+
+    Following is the TreeNode class structure
+
+    class TreeNode<T> 
+    {
+       public:
+        T data;
+        TreeNode<T> left;
+        TreeNode<T> right;
+
+        TreeNode(T data) 
+        {
+            this.data = data;
+            left = null;
+            right = null;
+        }
+    };
+
+************************************************************/
+
+import java.util.*;
+
+public class Solution 
+{
+    ArrayList<Integer> ans;
+    public static bfs(TreeNode root,)
+    public static ArrayList<Integer> getLeftView(TreeNode<Integer> root) 
+    {
+        //    Write your code here.
+        ans=new ArrayList<>();
+        if(root==null) return ans;
+        Queue<TreeNode> q=new LinkedList<>();
+        q.add(root);
+        while(!q.isEmpty()){
+            Queue<TreeNode> temp=new LinkedList<>();
+            ans.add((int)q.peek().data);
+            while(!q.isEmpty()){
+                TreeNode x=q.remove();
+                if(x.left!=null)
+                    temp.add(x.left);
+                if(x.right!=null)
+                    temp.add(x.right);
+            }
+            q=temp;
+        }
+         return ans;
+    }
+}
