@@ -1,0 +1,44 @@
+/*
+
+	Following is the structure used to represent the Binary Tree Node
+
+	class BinaryTreeNode<T> {
+		T val;
+		BinaryTreeNode<T> left;
+		BinaryTreeNode<T> right;
+
+		public BinaryTreeNode(T val) {
+			this.val = val;
+			this.left = null;
+			this.right = null;
+		}
+	}
+
+*/
+
+import java.util.*;
+
+public class Solution {
+
+  public static ArrayList<Integer> getLevelOrder(BinaryTreeNode root) {
+
+      ArrayList<Integer> ans=new ArrayList<>();
+      if(root==null) return ans;
+      Queue<BinaryTreeNode> q=new LinkedList<>();
+      q.add(root);
+      while(!q.isEmpty()){
+          Queue<BinaryTreeNode> temp=new LinkedList<>();
+          while(!q.isEmpty()){
+              BinaryTreeNode x=q.remove();
+              ans.add((int)x.val);
+              if(x.left!=null)
+                  temp.add(x.left);
+              if(x.right!=null)
+                  temp.add(x.right);
+          }
+          q=temp;
+      }
+      return ans;
+  }
+
+}
