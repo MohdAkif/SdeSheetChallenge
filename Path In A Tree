@@ -1,0 +1,46 @@
+/*   
+    Following is the Binary Tree node structure for referance:
+
+    class TreeNode
+    {
+        int data;
+        TreeNode left, right;
+    
+        public TreeNode(int item)
+        {
+            data = item;
+            left = right = null;
+        }
+    }
+*/
+import java.util.*;
+public class Solution {
+    static ArrayList<Integer> ans;
+    static int x;
+    public static boolean findPath(TreeNode root){
+        if(root!=null && (int)root.data==x){
+            ans.add(x);
+            return true;
+        }
+        else if(root!=null){
+            ans.add((int)root.data);
+            if(findPath(root.left))
+                return true;
+            else if(findPath(root.right))
+                return true;
+            else
+                ans.remove(ans.size()-1);
+            return false;
+        }
+        else 
+            return false;
+        
+    }
+    public static ArrayList<Integer> pathInATree(TreeNode root, int x) {
+        // Write your code here..
+        ans=new ArrayList<>();
+        Solution.x=x;
+        findPath(root);
+        return ans;
+    }
+}
