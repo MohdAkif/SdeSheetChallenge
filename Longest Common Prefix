@@ -1,0 +1,65 @@
+
+public class Solution {
+    static Node root;
+    static class Node{
+        Node[] link=new Node[26];
+        int pc=0;
+        int wc=0;
+        public boolean containsKey(char ch){
+            return link[ch-'a']!=null;
+        }
+        public void put(char ch,Node node){
+            link[ch-'a']=node;
+        }
+        public Node get(char ch){
+            return link[ch-'a'];
+        }
+    }
+    public static void insertOne(String s){
+        Node temp=root;
+        for(int i=0 ; i<s.length() ; i++){
+            if(!temp.containsKey(s.charAt(i))){
+                temp.put(s.charAt(i),new Node());
+            }
+            temp=temp.get(s.charAt(i));
+            temp.pc+=1;
+        }
+        temp.wc++;
+        
+    }
+    public static void insert(String s){
+        Node temp=root;
+        for(int i=0 ; i<s.length() ; i++){
+            if(temp.containsKey(s.charAt(i))){
+                temp=temp.get(s.charAt(i));
+                temp.pc+=1;
+            }
+            else 
+                return ;
+        }
+    }
+    public static int search(String s,int n){
+        Node temp=root;
+        int count=0;
+        for(int i=0 ; i<s.length() ; i++){
+            if(temp.containsKey(s.charAt(i)) && temp.get(s.charAt(i)).pc==n){
+                temp=temp.get(s.charAt(i));
+                count++;
+            }
+            else 
+                break;
+        }
+        return count;
+    }
+    
+	public static String longestCommonPrefix(String[] arr, int n) {
+		// Write your code here
+        root=new Node();
+        insertOne(arr[0]);
+        for(int i=1 ; i<arr.length ; i++){
+            insert(arr[i]);
+        }
+        return arr[0].substring(0,search(arr[0],arr.length));
+	}
+
+}
