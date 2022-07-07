@@ -1,0 +1,35 @@
+/*
+	
+	Following is the Binary Tree node structure:
+
+	public class TreeNode {
+	    int data;
+	    TreeNode left;
+	    TreeNode right;
+	    TreeNode() {}
+	    TreeNode(int val) { this.data = val; }
+	    TreeNode(int val, TreeNode left, TreeNode right) {
+	       this.data = val;
+	        this.left = left;
+	        this.right = right;
+	    }
+	}
+
+*/
+import java.util.*;
+public class Solution {
+    static List<Integer> ans;
+    public static void preOrder(TreeNode root){
+        if(root!=null){
+            ans.add(root.data);
+            preOrder(root.left);
+            preOrder(root.right);
+        }
+    }
+    public static List < Integer > getPreOrderTraversal(TreeNode root) {
+    	// Write your code here.
+        ans=new ArrayList<>();
+        preOrder(root);
+        return ans;
+    }
+}
