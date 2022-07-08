@@ -1,0 +1,61 @@
+/*********************************************
+
+    class BinaryTreeNode {
+        int val;
+        BinaryTreeNode left;
+        BinaryTreeNode right;
+
+        BinaryTreeNode(int val) {
+            this.val = val;
+            this.left = null;
+            this.right = null;
+        }
+    }
+
+*********************************************/
+
+import java.util.*;
+public class Solution {
+    static class Node{
+        BinaryTreeNode root;
+        int parent;
+        public Node(BinaryTreeNode r,int p){
+            root=r;
+            parent=p;
+        }
+    }
+    static int left,right;
+    public static void findLeftRight(BinaryTreeNode root,int parent){
+        if(root!=null){
+            findLeftRight(root.left,parent-1);
+            left=Math.min(left,parent);
+            right=Math.max(right,parent);
+            findLeftRight(root.right,parent+1);
+        } 
+    }
+    public static ArrayList<Integer> bottomView(BinaryTreeNode root) {
+         // Write your code here. 
+        left=0;
+        right=0;
+        findLeftRight(root,0);
+        left*=-1;
+        //System.out.println(left+" "+right);
+        int width=left+right+1;
+        ArrayList<Integer> ans=new ArrayList<>();
+        int[] arr=new int[width];
+        Queue<Node> queue=new LinkedList<>();
+        queue.add(new Node(root,left));
+        while(!queue.isEmpty()){
+            Queue<Node> temp=new LinkedList<>();
+            while(!queue.isEmpty()){
+                Node x=queue.remove();
+                arr[x.parent]=(int)x.root.val;
+                if(x.root.left!=null) temp.add(new Node(x.root.left,x.parent-1));
+                if(x.root.right!=null) temp.add(new Node(x.root.right,x.parent+1));
+            }
+            queue=temp;
+        }
+        for(int val:arr) ans.add(val);
+        return ans;
+    }
+}
